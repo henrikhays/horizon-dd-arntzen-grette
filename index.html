@@ -30,7 +30,7 @@
     --shadow-dark:0 18px 50px rgba(0,0,0,.35);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-snap-type:y proximity}
   body{
     font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
     color:var(--ink);
@@ -126,7 +126,8 @@
   .deck.show{display:block}
   main{padding-top:var(--topbar,104px)}
 
-  section.slide{padding:84px 0;position:relative;scroll-margin-top:calc(var(--topbar,104px) + 16px)}
+  section.slide{padding:84px 0;position:relative;scroll-snap-align:start;scroll-margin-top:calc(var(--topbar,104px) + 16px)}
+  section.slide:not(.hero){min-height:calc(100vh - var(--topbar,77px));min-height:calc(100dvh - var(--topbar,77px));display:flex;flex-direction:column;justify-content:center}
   section.dark{background:var(--navy);color:var(--on-dark)}
   section.dark h2,section.dark h1{color:#fff}
   section.light{background:var(--light)}
@@ -152,7 +153,7 @@
   .ic-64{width:64px;height:64px}
 
   /* ---------- Hero ---------- */
-  .hero{min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--navy)}
+  .hero{min-height:calc(100vh - var(--topbar,77px));min-height:calc(100dvh - var(--topbar,77px));display:flex;align-items:center;position:relative;overflow:hidden;background:var(--navy)}
   .hero .deco{
     position:absolute;border-radius:50%;
     background:#1a3a5c;opacity:.5;
