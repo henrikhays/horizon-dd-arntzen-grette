@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Horizon DD × Arntzen Grette — Tilbud & Portefølje</title>
+<meta name="description" content="AI-drevet due diligence og rådgivning. Konsultasjonspakke og portefølje, eksklusivt for Arntzen Grette." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#102338;
+    --navy-2:#0d1d30;
+    --navy-card:#15293f;
+    --navy-card-2:#13243a;
+    --gold:#c7943e;
+    --gold-soft:#cba255;
+    --gold-deep:#bd842f;
+    --light:#f4f6f8;
+    --card-light:#f3f4f6;
+    --border-light:#e4e7eb;
+    --ink:#14253b;
+    --ink-soft:#52616f;
+    --ink-mute:#6b7886;
+    --on-dark:#eef2f6;
+    --on-dark-soft:#aab8c6;
+    --maxw:1180px;
+    --shadow:0 1px 2px rgba(16,35,56,.06),0 8px 30px rgba(16,35,56,.07);
+    --shadow-dark:0 18px 50px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink);
+    background:var(--light);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4,.serif{font-family:'PT Serif',Georgia,serif}
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-weight:600;
+    font-size:.72rem;
+    color:var(--gold);
+  }
+  .italic-lead{font-family:'PT Serif',serif;font-style:italic;color:#2c4866}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+
+  /* ---------- Top progress + nav ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));z-index:100;transition:width .1s linear}
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:90;
+    background:rgba(13,29,48,.86);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:20px;padding:13px 32px}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--on-dark);font-weight:600;font-size:.95rem;white-space:nowrap;flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .brand .mark{width:13px;height:13px;background:var(--gold);border-radius:3px;flex:none}
+  .brand small{color:var(--on-dark-soft);font-weight:400}
+
+  /* prominent deck toggle */
+  .deck-toggle{
+    position:relative;display:flex;flex:none;
+    width:clamp(300px,38vw,420px);
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:5px;
+  }
+  .deck-toggle .slider{
+    position:absolute;top:5px;bottom:5px;left:5px;width:calc(50% - 5px);
+    border-radius:999px;background:linear-gradient(135deg,var(--gold-deep),var(--gold-soft));
+    box-shadow:0 6px 18px rgba(199,148,62,.42);
+    transition:transform .34s cubic-bezier(.45,.05,.2,1);z-index:1;
+  }
+  .deck-toggle.is-port .slider{transform:translateX(100%)}
+  .deck-toggle .dt{
+    position:relative;z-index:2;flex:1 1 0;min-width:0;
+    border:none;background:none;cursor:pointer;
+    color:var(--on-dark-soft);font:600 .87rem/1 'Inter',sans-serif;
+    padding:11px 16px;border-radius:999px;white-space:nowrap;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:color .25s;letter-spacing:.01em;
+  }
+  .deck-toggle .dt svg{width:16px;height:16px;flex:none}
+  .deck-toggle .dt.active{color:#16263a}
+  .deck-toggle .dt:not(.active):hover{color:#fff}
+  .nav-contact{flex:1 1 0;text-align:right;color:var(--on-dark-soft);font-size:.84rem;text-decoration:none;white-space:nowrap}
+  .nav-contact:hover{color:var(--gold)}
+
+  /* section data source — hidden, used to build the side rail */
+  .subnav{display:none}
+
+  /* vertical section rail (right edge) */
+  .rail{
+    position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:70;
+    display:flex;flex-direction:column;gap:6px;align-items:flex-end;
+  }
+  .rail-item{
+    display:flex;align-items:center;justify-content:flex-end;gap:12px;
+    text-decoration:none;padding:5px 0;cursor:pointer;
+  }
+  .rail-item .lbl{
+    font-size:.74rem;font-weight:600;color:var(--ink);white-space:nowrap;
+    background:rgba(255,255,255,.95);border:1px solid var(--border-light);
+    padding:4px 11px;border-radius:7px;box-shadow:var(--shadow);
+    opacity:0;transform:translateX(8px);transition:opacity .22s,transform .22s;pointer-events:none;
+  }
+  .rail-item .dot{
+    width:9px;height:9px;border-radius:50%;flex:none;
+    background:#9fb0c0;transition:.25s;
+  }
+  .rail:hover .rail-item .lbl{opacity:1;transform:none}
+  .rail-item:hover .dot{background:var(--gold);transform:scale(1.15)}
+  .rail-item.active .dot{background:var(--gold);width:11px;height:11px;box-shadow:0 0 0 4px rgba(199,148,62,.18)}
+  .rail-item.active .lbl{opacity:1;transform:none;border-color:var(--gold-soft)}
+  @media(max-width:1024px){ .rail{display:none} }
+
+  /* ---------- Deck containers ---------- */
+  .deck{display:none}
+  .deck.show{display:block}
+  main{padding-top:var(--topbar,104px)}
+
+  section.slide{padding:84px 0;position:relative;scroll-margin-top:calc(var(--topbar,104px) + 16px)}
+  section.dark{background:var(--navy);color:var(--on-dark)}
+  section.dark h2,section.dark h1{color:#fff}
+  section.light{background:var(--light)}
+  section.alt{background:#fff}
+
+  .sec-head{margin-bottom:42px}
+  .sec-head .eyebrow{display:block;margin-bottom:12px}
+  h2.title{font-size:2.3rem;line-height:1.12;font-weight:700;letter-spacing:-.01em}
+  .title-mark{display:inline-block;width:18px;height:18px;background:var(--gold);border-radius:4px;margin-right:16px;vertical-align:middle;transform:translateY(-4px)}
+  .lead{font-size:1.18rem;margin-top:14px;max-width:840px}
+  .sub-italic{font-family:'PT Serif',serif;font-style:italic;font-size:1.32rem;color:#2c4866;margin-top:6px}
+  section.dark .sub-italic{color:var(--gold-soft)}
+
+  /* ---------- Icon circles ---------- */
+  .ic{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+  .ic svg{width:48%;height:48%}
+  .ic-navy{background:var(--navy);color:#fff}
+  .ic-gold{background:var(--gold-soft);color:var(--navy)}
+  .ic-gold-deep{background:var(--gold-deep);color:#fff}
+  .ic-56{width:56px;height:56px}
+  .ic-48{width:48px;height:48px}
+  .ic-40{width:40px;height:40px}
+  .ic-64{width:64px;height:64px}
+
+  /* ---------- Hero ---------- */
+  .hero{min-height:88vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--navy)}
+  .hero .deco{
+    position:absolute;border-radius:50%;
+    background:#1a3a5c;opacity:.5;
+  }
+  .hero-tilbud .deco{width:620px;height:620px;top:-120px;right:-140px}
+  .hero-port .deco{display:none}
+  .hero-inner{position:relative;z-index:2;width:100%}
+  .hero h1{font-size:3.5rem;line-height:1.08;font-weight:700;color:#fff;margin:18px 0;letter-spacing:-.015em}
+  .hero .x{color:var(--gold-soft);font-style:normal}
+  .hero .cross-line{font-size:1.45rem;color:var(--on-dark);font-weight:400}
+  .hero .foot{position:absolute;bottom:46px;left:0;display:flex;align-items:center;gap:10px;color:var(--on-dark-soft);font-size:.92rem}
+  .hero .foot .mark{width:13px;height:13px;background:var(--gold);border-radius:3px}
+
+  .hero-port h1{font-size:4rem;margin:14px 0 6px}
+  .hero-port .role{font-family:'PT Serif',serif;font-style:italic;font-size:1.6rem;color:var(--gold-soft);margin-bottom:18px}
+  .hero-port .blurb{color:var(--on-dark);font-size:1.1rem;max-width:560px}
+  .divider-dot{display:flex;align-items:center;gap:0;margin:40px 0 22px;max-width:760px}
+  .divider-dot .ln{height:1px;background:rgba(255,255,255,.2);flex:1}
+  .divider-dot .dot{width:13px;height:13px;border-radius:50%;background:var(--gold-soft);flex:none;margin:0 0 0 -2px}
+  .hero-port .tags{color:var(--on-dark-soft);font-size:.92rem;letter-spacing:.02em}
+  .hero-port .am{color:#fff;font-weight:600;font-size:.95rem;margin-top:8px}
+  .hero-port .am a{color:#fff;text-decoration:none}
+
+  /* ---------- Grids & cards ---------- */
+  .grid{display:grid;gap:22px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(2,1fr)}
+
+  .card{
+    background:var(--card-light);border:1px solid var(--border-light);
+    border-radius:14px;padding:28px;transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card h3{font-size:1.16rem;font-weight:700;margin-bottom:10px;color:var(--ink)}
+  .card p{color:var(--ink-soft);font-size:.97rem}
+  .card .row-head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .card .row-head h3{margin:0}
+
+  /* feature list (icon + text rows) */
+  .feat{display:flex;gap:20px;align-items:flex-start;margin-bottom:30px}
+  .feat .tx h3{font-size:1.12rem;font-weight:700;margin-bottom:6px}
+  .feat .tx p{color:var(--ink-soft)}
+  section.dark .feat .tx p{color:var(--on-dark-soft)}
+  section.dark .feat .tx h3{color:#fff}
+
+  /* highlight dark card */
+  .hl-card{
+    background:var(--navy-card-2);color:var(--on-dark);border-radius:16px;padding:36px;
+    box-shadow:var(--shadow-dark);position:relative;
+  }
+  .hl-card .mark{width:16px;height:16px;background:var(--gold);border-radius:4px;margin-bottom:18px}
+  .hl-card h3{color:#fff;font-size:1.5rem;margin-bottom:16px}
+  .hl-card p{color:var(--on-dark-soft);font-size:1.02rem}
+
+  /* numbered steps */
+  .steps{display:flex;flex-direction:column;gap:26px;max-width:860px}
+  .step{display:flex;gap:24px;align-items:flex-start}
+  .step .num{
+    width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-family:'PT Serif',serif;font-size:1.5rem;font-weight:700;
+  }
+  .num-navy{background:var(--navy);color:var(--gold-soft)}
+  .num-gold{background:var(--gold-deep);color:#23150a}
+  .step .tx h3{font-size:1.14rem;font-weight:700;margin-bottom:4px}
+  .step .tx p{color:var(--ink-soft)}
+  section.dark .step .tx h3{color:#fff}
+  section.dark .step .tx p{color:var(--on-dark-soft)}
+
+  /* check list */
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:26px 44px}
+  .check{display:flex;gap:16px;align-items:flex-start}
+  .check .ic{width:34px;height:34px}
+  .check p{color:var(--ink-soft);font-size:1rem;padding-top:3px}
+  section.dark .check p{color:var(--on-dark)}
+
+  /* pricing */
+  .price-wrap{display:grid;grid-template-columns:minmax(320px,420px) 1fr;gap:48px;align-items:center}
+  .price-card{background:var(--navy-card-2);border-radius:16px;padding:42px;color:#fff;box-shadow:var(--shadow-dark)}
+  .price-card .amount{font-family:'PT Serif',serif;font-weight:700;font-size:3.4rem;line-height:1;letter-spacing:-.01em}
+  .price-card .per{color:var(--gold-soft);margin-top:8px;font-size:1rem}
+  .price-card .hr{height:1px;background:rgba(255,255,255,.18);margin:26px 0}
+  .price-card .total{font-size:1.05rem;color:#fff}
+  .price-card .note{color:var(--on-dark-soft);font-size:.95rem;margin-top:22px}
+
+  /* team */
+  .team-card .role{color:var(--gold-deep);font-weight:600;font-size:.92rem;margin:-4px 0 18px}
+  .quote{font-family:'PT Serif',serif;font-style:italic;font-size:1.2rem;color:#2c4866;margin-top:36px}
+  .quote span{font-style:normal;font-family:'Inter';font-size:.95rem;color:var(--ink-mute)}
+
+  /* ---------- Portfolio specific ---------- */
+  .pcard{background:#fff;border:1px solid var(--border-light);border-top:3px solid var(--gold-soft);border-radius:6px;padding:30px 26px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+  .pcard:hover{transform:translateY(-4px)}
+  .pcard .ic{margin-bottom:18px}
+  .pcard h3{font-size:1.2rem;margin-bottom:10px}
+  .pcard p{color:var(--ink-soft);font-size:.95rem}
+
+  /* engagement rows */
+  .erow{
+    display:grid;grid-template-columns:64px 1fr 280px;gap:24px;align-items:center;
+    background:#fff;border-left:4px solid var(--gold-soft);border-radius:6px;
+    padding:20px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:transform .2s;
+  }
+  .erow:hover{transform:translateX(4px)}
+  .erow.feature{background:var(--navy-card-2);border-left-color:var(--gold);color:#fff}
+  .erow .ic{margin:0 auto}
+  .erow h3{font-size:1.22rem;margin-bottom:4px}
+  .erow .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:600;margin-bottom:8px}
+  .erow.feature .label{color:var(--gold-soft)}
+  .erow p{color:var(--ink-soft);font-size:.95rem}
+  .erow.feature p{color:var(--on-dark-soft)}
+  .erow .rel .label{color:var(--gold-deep)}
+  .erow .rel p{font-size:.9rem;border-left:1px solid var(--border-light);padding-left:20px}
+  .erow.feature .rel p{border-left-color:rgba(255,255,255,.18);color:var(--on-dark-soft)}
+
+  /* breadth */
+  .breadth-feature{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:var(--navy-card-2);border-left:4px solid var(--gold);border-radius:8px;padding:28px 32px;color:#fff;margin-bottom:24px;box-shadow:var(--shadow-dark)}
+  .breadth-feature .lead-row{display:flex;gap:22px;align-items:flex-start}
+  .breadth-feature h3{font-size:1.3rem;margin-bottom:6px;color:#fff}
+  .breadth-feature .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-soft);font-weight:600;margin-bottom:10px}
+  .breadth-feature p{color:var(--on-dark-soft);font-size:.95rem;max-width:560px}
+  .stats{display:flex;gap:34px;text-align:right}
+  .stats .stat .n{font-family:'PT Serif',serif;font-weight:700;font-size:1.5rem;color:var(--gold-soft)}
+  .stats .stat .l{font-size:.74rem;color:var(--on-dark-soft);margin-top:2px}
+  .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .mini{background:#fff;border:1px solid var(--border-light);border-left:4px solid var(--gold-soft);border-radius:6px;padding:18px 20px;box-shadow:var(--shadow)}
+  .mini h4{font-family:'PT Serif',serif;font-size:1.08rem;margin-bottom:8px;color:var(--ink)}
+  .mini .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-deep);font-weight:600}
+  .mini .label span{color:var(--ink-mute);font-weight:400;letter-spacing:0;text-transform:none}
+
+  /* need cards (dark, gold left border) */
+  .need{background:var(--navy-card-2);border-left:4px solid var(--gold);border-radius:10px;padding:30px;display:flex;gap:22px;align-items:flex-start;box-shadow:var(--shadow-dark)}
+  .need h3{color:#fff;font-size:1.2rem;margin-bottom:8px}
+  .need p{color:var(--on-dark-soft);font-size:.95rem}
+
+  /* relevance side card */
+  .rel-card{background:var(--navy-card);border-top:3px solid var(--gold-soft);border-radius:8px;padding:30px}
+  .rel-card .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-soft);font-weight:600;margin-bottom:14px}
+  .rel-card p{color:var(--on-dark-soft);font-size:.98rem}
+  .rel-card .em{font-family:'PT Serif',serif;font-style:italic;color:var(--gold-soft);margin-top:24px;font-size:1.05rem}
+
+  /* references */
+  .refs{display:flex;flex-direction:column;gap:12px}
+  .ref{display:grid;grid-template-columns:320px 1fr;gap:28px;background:#fff;border-left:4px solid var(--gold-soft);border-radius:6px;padding:18px 26px;box-shadow:var(--shadow)}
+  .ref .who h4{font-family:'PT Serif',serif;font-size:1.12rem;color:var(--ink)}
+  .ref .who .org{color:var(--gold-deep);font-size:.82rem;font-weight:600;margin:2px 0}
+  .ref .who .ct{color:var(--ink-mute);font-size:.82rem}
+  .ref .note{color:var(--ink-soft);font-size:.94rem;align-self:center}
+  .ref .note.q{font-family:'PT Serif',serif;font-style:italic;color:#2c4866}
+  .refs-foot{text-align:center;margin-top:26px;color:var(--ink);font-weight:600}
+  .refs-foot a{color:var(--gold-deep);text-decoration:none;font-weight:400}
+
+  /* closing dark */
+  .closing .blurb{font-size:1.15rem;color:var(--on-dark);max-width:760px}
+  .closing .small{color:var(--on-dark-soft);font-size:.95rem}
+  .closing .sig{font-family:'PT Serif',serif;font-style:italic;color:var(--gold-soft);font-size:1.25rem;margin-top:6px}
+  .closing .mail{color:#fff;font-weight:600;margin-top:6px}
+  .closing .mail a{color:#fff;text-decoration:none}
+
+  .deck-foot{background:var(--navy-2);color:var(--on-dark-soft);padding:26px 0;font-size:.85rem}
+  .deck-foot .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .deck-foot .mark{display:inline-block;width:11px;height:11px;background:var(--gold);border-radius:3px;margin-right:9px;vertical-align:middle}
+  .deck-foot a{color:var(--gold-soft);text-decoration:none}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:920px){
+    .g3,.mini-grid{grid-template-columns:1fr 1fr}
+    .price-wrap{grid-template-columns:1fr}
+    .erow{grid-template-columns:52px 1fr;gap:16px}
+    .erow .rel{grid-column:1/-1}
+    .erow .rel p{border-left:none;padding-left:0;border-top:1px solid var(--border-light);padding-top:12px}
+    .breadth-feature{grid-template-columns:1fr}
+    .stats{text-align:left}
+    .ref{grid-template-columns:1fr}
+    .hero h1{font-size:2.6rem}
+    .hero-port h1{font-size:3rem}
+  }
+  @media(max-width:680px){
+    .container,.nav-inner,.subnav-inner{padding-left:20px;padding-right:20px}
+    .g2,.g4,.g3,.checks,.mini-grid{grid-template-columns:1fr}
+    h2.title{font-size:1.8rem}
+    .nav-contact{display:none}
+    .ref{grid-template-columns:1fr}
+    section.slide{padding:60px 0}
+    .price-card .amount{font-size:2.6rem}
+    .nav-inner{flex-wrap:wrap;gap:12px;justify-content:center}
+    .brand{flex:0 1 auto}
+    .deck-toggle{order:2;width:100%}
+    .subnav-inner{margin:0;width:max-content}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SVG icon sprite ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-search"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></g>
+    <g id="i-chart"><line x1="4" y1="20" x2="4" y2="11"/><line x1="10" y1="20" x2="10" y2="4"/><line x1="16" y1="20" x2="16" y2="14"/><line x1="20" y1="20" x2="20" y2="8"/></g>
+    <g id="i-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></g>
+    <g id="i-clock"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></g>
+    <g id="i-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></g>
+    <g id="i-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></g>
+    <g id="i-flow"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/></g>
+    <g id="i-scale"><path d="M12 3v18"/><path d="M7 21h10"/><path d="M5 7l-3 6h6z"/><path d="M19 7l-3 6h6z"/><path d="M5 7h14"/></g>
+    <g id="i-checklist"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></g>
+    <g id="i-lock"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g>
+    <g id="i-file"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></g>
+    <g id="i-gavel"><path d="M14 13l-7 7"/><path d="M3 21h8"/><path d="M9.5 7.5l5 5 4-4-5-5z"/><path d="M14.5 2.5l5 5"/></g>
+    <g id="i-check"><polyline points="5 12 10 17 19 7"/></g>
+    <g id="i-cap"><path d="M22 9L12 5 2 9l10 4 10-4z"/><path d="M6 11v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></g>
+    <g id="i-cpu"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></g>
+    <g id="i-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1 .37 1.94.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.87.33 1.81.57 2.81.7A2 2 0 0 1 22 16.92z"/></g>
+    <g id="i-mic"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></g>
+    <g id="i-brain"><path d="M9 3a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 0V4a3 3 0 0 0-3-1z"/><path d="M15 3a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 0"/></g>
+    <g id="i-gears"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></g>
+    <g id="i-leaf"><path d="M11 20A7 7 0 0 1 4 13c0-6 7-9 16-9 0 9-3 16-9 16z"/><path d="M4 20c4-7 8-9 13-10"/></g>
+    <g id="i-wind"><path d="M3 8h11a3 3 0 1 0-3-4"/><path d="M3 12h15a3 3 0 1 1-3 4"/><path d="M3 16h7a2.5 2.5 0 1 1-2.5 3"/></g>
+    <g id="i-finger"><path d="M12 11v3a6 6 0 0 1-6 6"/><path d="M6 13a6 6 0 0 1 12 0c0 2 0 5-1 7"/><path d="M9 11a3 3 0 0 1 6 0c0 3 0 6-1 8"/><path d="M3 11a9 9 0 0 1 16-5.7"/></g>
+    <g id="i-hand"><path d="M11 11l-3-3a2 2 0 0 0-3 3l5 5a4 4 0 0 0 6 0l4-4a2 2 0 0 0-3-3l-2 2"/><path d="M13 13l3-3a2 2 0 0 1 3 3"/></g>
+    <g id="i-mobile"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></g>
+    <g id="i-clip"><rect x="6" y="4" width="12" height="18" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><polyline points="9 13 11 15 15 11"/></g>
+    <g id="i-checkc"><circle cx="12" cy="12" r="9"/><polyline points="8 12 11 15 16 9"/></g>
+  </defs>
+</svg>
+
+<div id="progress"></div>
+<nav class="rail" id="sectionRail" aria-label="Seksjoner"></nav>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="mark"></span>Horizon DD<small>&nbsp;× Arntzen Grette</small></div>
+    <div class="deck-toggle" id="deckToggle" role="tablist" aria-label="Velg dokument">
+      <span class="slider" aria-hidden="true"></span>
+      <button class="dt active" data-deck="tilbud" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg>Tilbudet</button>
+      <button class="dt" data-deck="port" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-layers"/></svg>Appendix · Portefølje</button>
+    </div>
+    <a class="nav-contact" href="mailto:henrik@horizondd.no">henrik@horizondd.no</a>
+  </div>
+  <nav class="subnav" id="subnav-tilbud">
+    <div class="subnav-inner">
+      <a href="#t-hero">Forside</a>
+      <a href="#t-utgangspunkt">Utgangspunktet</a>
+      <a href="#t-moetet">Hva vi hørte</a>
+      <a href="#t-hvordan">Slik fungerer Horizon DD</a>
+      <a href="#t-jobber">Slik jobber vi</a>
+      <a href="#t-leveranse">Hva dere sitter igjen med</a>
+      <a href="#t-krav">Advokatfirmaers krav</a>
+      <a href="#t-team">Teamet</a>
+      <a href="#t-pris">Eksklusivitet og pris</a>
+      <a href="#t-neste">Neste steg</a>
+    </div>
+  </nav>
+  <nav class="subnav" id="subnav-port" style="display:none">
+    <div class="subnav-inner">
+      <a href="#p-hero">Forside</a>
+      <a href="#p-profil">Profil</a>
+      <a href="#p-forskning">Forskning · NTNU</a>
+      <a href="#p-oppdrag1">Oppdrag I</a>
+      <a href="#p-oppdrag2">Oppdrag II · Eiendom</a>
+      <a href="#p-oppdrag3">Oppdrag III</a>
+      <a href="#p-bredde">Bredde</a>
+      <a href="#p-behov">Behovet</a>
+      <a href="#p-laget">Laget for AG</a>
+      <a href="#p-referanser">Referanser</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============================================================= -->
+<!-- ======================  DECK 1: TILBUD  ===================== -->
+<!-- ============================================================= -->
+<div class="deck show" id="deck-tilbud">
+<main>
+
+  <!-- Hero -->
+  <section class="hero hero-tilbud slide" id="t-hero">
+    <div class="deco"></div>
+    <div class="container hero-inner">
+      <span class="eyebrow">Konsultasjonspakke &nbsp;·&nbsp; Eksklusivt for AG</span>
+      <h1>AI-drevet due diligence<br>og rådgivning</h1>
+      <p class="cross-line">Horizon DD &nbsp;<span class="x">×</span>&nbsp; Arntzen Grette</p>
+    </div>
+    <div class="container foot"><span class="mark"></span>Konfidensielt &nbsp;·&nbsp; Juni 2026</div>
+  </section>
+
+  <!-- Utgangspunktet -->
+  <section class="slide light" id="t-utgangspunkt">
+    <div class="container">
+      <div class="sec-head reveal"><h2 class="title"><span class="title-mark"></span>Utgangspunktet</h2></div>
+      <div class="grid" style="grid-template-columns:1.4fr 1fr;gap:48px;align-items:center">
+        <div>
+          <div class="feat reveal">
+            <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span>
+            <div class="tx"><h3>Eksklusiv tilgang</h3><p>Test plattformen vi utvikler, sammenlign mot egne manuelle og AI-baserte prosesser, og få skreddersydd funksjonalitet.</p></div>
+          </div>
+          <div class="feat reveal">
+            <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg></span>
+            <div class="tx"><h3>Oversikt og innsikt</h3><p>Hva AI kan gjøre for dere i dag og de neste månedene og årene, særlig i DD for næringseiendom.</p></div>
+          </div>
+          <div class="feat reveal" style="margin-bottom:0">
+            <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-layers"/></svg></span>
+            <div class="tx"><h3>Bredere fokus enn DD</h3><p>Fokus på å styrke roller fra junior til leder, optimalisere drift og redusere kostnader, samt sikre fremtidsrettet compliance til lavere kostnad.</p></div>
+          </div>
+        </div>
+        <div class="hl-card reveal">
+          <div class="mark"></div>
+          <h3>Synlig gevinst</h3>
+          <p>De som står bak satsingen får konkrete resultater å vise til, både praktisk og symbolsk overfor team og ledelse. Verdien dokumenteres uten en stor investering i forkant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hva vi hørte i møtet -->
+  <section class="slide alt" id="t-moetet">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="title"><span class="title-mark"></span>Hva vi hørte i møtet</h2>
+        <p class="sub-italic">Konkrete behov. Tilbudet er bygget for å møte dem.</p>
+      </div>
+      <div class="grid g4">
+        <div class="card reveal">
+          <div class="row-head"><span class="ic ic-navy ic-48"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-clock"/></svg></span><h3>Tidspress</h3></div>
+          <p>Budaksept presser tidslinjen. Den som leverer en gjennomarbeidet rapport raskest, vinner mandatet. Vi leser 200+ dokumenter automatisk og flagger til fordel for rask go/no-go.</p>
+        </div>
+        <div class="card reveal">
+          <div class="row-head"><span class="ic ic-navy ic-48"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-users"/></svg></span><h3>Rollebasert output</h3></div>
+          <p>Partner og trainee trenger ulike formater. Vi bygger rapporter tilpasset mottakeren, uten merarbeid for den som kjører analysen.</p>
+        </div>
+        <div class="card reveal">
+          <div class="row-head"><span class="ic ic-navy ic-48"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-shield"/></svg></span><h3>Ansvarlighet rundt AI</h3></div>
+          <p>En AI-feil kan få konsekvenser. Audit-trail og flagging per bruker plasserer ansvaret hos den som utfører arbeidet, ikke hos systemet.</p>
+        </div>
+        <div class="card reveal">
+          <div class="row-head"><span class="ic ic-navy ic-48"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flow"/></svg></span><h3>Intern AI-strategi</h3></div>
+          <p>Styrke teamet eller bygge ny kapasitet? Vi hjelper dere å se nye arbeidsflyter, ikke bare optimalisere de eksisterende.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slik fungerer Horizon DD -->
+  <section class="slide light" id="t-hvordan">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="title"><span class="title-mark"></span>Slik fungerer Horizon DD</h2>
+        <p class="sub-italic">Due diligence er ikke papirarbeid. Det er risikostyring.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="num num-navy">1</div><div class="tx"><h3>Last opp filer</h3><p>200+ dokumenter leses, tolkes og struktureres automatisk.</p></div></div>
+        <div class="step reveal"><div class="num num-navy">2</div><div class="tx"><h3>Registeroppslag</h3><p>Kartverket, BRREG, NVE, NGU, Riksantikvaren, NVDB og flere, i sanntid.</p></div></div>
+        <div class="step reveal"><div class="num num-navy">3</div><div class="tx"><h3>AI-analyse</h3><p>Meglerstandard, leiekontrakter, servitutter, tomtefeste, MVA-justering og mer.</p></div></div>
+        <div class="step reveal"><div class="num num-navy">4</div><div class="tx"><h3>Risikorapport</h3><p>Røde og gule flagg med kildehenvisning og audit-trail per funn.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slik jobber vi -->
+  <section class="slide alt" id="t-jobber">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="title"><span class="title-mark"></span>Slik jobber vi</h2>
+        <p class="sub-italic">En tett, eksklusiv rådgivningsrelasjon over tre måneder. Testing og skreddersøm inngår.</p>
+      </div>
+      <div class="grid g2">
+        <div class="card reveal" style="padding:34px">
+          <span class="ic ic-navy ic-64" style="margin-bottom:22px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scale"/></svg></span>
+          <h3>Ledelse</h3>
+          <p>Faste møter med Thomas og Ole-Jacob annenhver uke, to timer. Korte og målrettede, med vekt på umiddelbar nytteverdi og økt innsikt for deres respektive roller.</p>
+        </div>
+        <div class="card reveal" style="padding:34px">
+          <span class="ic ic-navy ic-64" style="margin-bottom:22px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-checklist"/></svg></span>
+          <h3>Det operative</h3>
+          <p>Daglig kontakt med øvrige roller, fra junior og oppover, der arbeidet faktisk gjøres og plattformen utvikles og testes.</p>
+        </div>
+      </div>
+      <p class="sub-italic reveal" style="font-size:1.15rem;margin-top:34px">Vi jobber tett og responsivt, med rask oppfølging på skreddersøm og videreutvikling underveis.</p>
+    </div>
+  </section>
+
+  <!-- Hva dere sitter igjen med -->
+  <section class="slide light" id="t-leveranse">
+    <div class="container">
+      <div class="sec-head reveal"><h2 class="title"><span class="title-mark"></span>Hva dere sitter igjen med</h2></div>
+      <div class="checks">
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Kartlegging og veikart for AI, i DD og i drift, administrasjon og ledelse.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Et skreddersydd oppsett for intern bruk og videre benchmarking.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Konkrete, prioriterte bruksområder med tydelig verdivurdering.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Intern AI-strategi og ansvarlighetspolicy, klar til forankring.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Testing og benchmark av plattformen mot egne case og prosesser.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Konsept og veikart for et eget agentbasert datarom.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Rollebaserte rapportformater for partner, senioradvokat og trainee.</p></div>
+        <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Risikovurdering for compliance og personvern.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bygget for advokatfirmaers krav -->
+  <section class="slide alt" id="t-krav">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="title"><span class="title-mark"></span>Bygget for advokatfirmaers krav</h2>
+        <p class="sub-italic">Designet for å tåle en revisjon, en klientklage eller en tvist, fra dag én.</p>
+      </div>
+      <div class="grid g3">
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-shield"/></svg></span><h3>Microsoft DPA</h3><p>Azure AI Foundry. Ingen modelltrening på klientdata. GDPR artikkel 28.</p></div>
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-clip"/></svg></span><h3>Audit-trail</h3><p>Tidsstempel, bruker-ID, modellversjon og kildedata. Sporbart i 6+ måneder.</p></div>
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-lock"/></svg></span><h3>Modified abuse monitoring</h3><p>Leverandøren ser ikke klientdata. Kritisk for taushetsplikt.</p></div>
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></span><h3>NDA-gating</h3><p>Ingen data uten signert NDA. Organisasjonsisolasjon på databasenivå.</p></div>
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scale"/></svg></span><h3>EU AI Act-klar</h3><p>Risikoklassifisering dokumentert. Møter krav fra 2026 til 2027.</p></div>
+        <div class="card reveal"><span class="ic ic-navy ic-48" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gavel"/></svg></span><h3>Kovel-doktrinen</h3><p>Kontraktsstruktur etter norsk rett, slik at advokatprivilegiet bevares.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teamet bak -->
+  <section class="slide light" id="t-team">
+    <div class="container">
+      <div class="sec-head reveal">
+        <h2 class="title"><span class="title-mark"></span>Teamet bak</h2>
+        <p class="sub-italic">Eiendomsinnsikt møter praktisk AI-bygging.</p>
+      </div>
+      <div class="grid g3">
+        <div class="card team-card reveal"><h3>Henrik Hays</h3><div class="role">Leder · PhD (NTNU), AI-rådgiver</div><p>Mer enn tre år med LLM-systemer, AI-agenter og datapipelines i forretningssammenheng skala. Se egen portefølje (Appendix).</p></div>
+        <div class="card team-card reveal"><h3>Bendik Skaslien</h3><div class="role">Eiendom og kapital · cand.jur.</div><p>Mer enn 24 år i næringseiendom: OBOS, DNB Næringseiendom, Asset Buyout Partners, Newsec og Amstrat.</p></div>
+        <div class="card team-card reveal"><h3>Fartein Hansen</h3><div class="role">Produkt og analyse</div><p>Bygger og tester plattformen i praksis, og sikrer at innsikten er konkret, strukturert og etterprøvbar.</p></div>
+      </div>
+      <p class="quote reveal">«Prosessen har vært smidig, konstruktiv og svært verdifull for oss.» &nbsp;<span>Mathias Carlsen, CEO, Whitson</span></p>
+    </div>
+  </section>
+
+  <!-- Eksklusivitet og pris -->
+  <section class="slide alt" id="t-pris">
+    <div class="container">
+      <div class="sec-head reveal"><h2 class="title"><span class="title-mark"></span>Eksklusivitet og pris</h2></div>
+      <div class="price-wrap">
+        <div class="price-card reveal">
+          <div class="amount">NOK 75 000</div>
+          <div class="per">per måned</div>
+          <div class="hr"></div>
+          <div class="total">Samlet NOK 225 000 over tre måneder.</div>
+          <div class="note">Fakturert månedlig. Eksklusivt for AG i perioden.</div>
+        </div>
+        <div class="checks" style="grid-template-columns:1fr;gap:20px">
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Rådgivning ledet av Henrik, støtte fra Fartein og Bendik</p></div>
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Ledelsesmøter annenhver uke og daglig kontakt med øvrige roller</p></div>
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Testing og skreddersøm av plattformen for intern bruk</p></div>
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Rollebaserte rapportformater og benchmarking</p></div>
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>AI-strategi, ansvarlighetspolicy og datarom-konsept</p></div>
+          <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Risikovurdering for compliance og personvern</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neste steg -->
+  <section class="slide dark" id="t-neste">
+    <div class="container">
+      <div class="sec-head reveal"><h2 class="title">Neste steg</h2></div>
+      <div class="steps" style="max-width:920px">
+        <div class="step reveal"><div class="num num-gold">1</div><div class="tx"><p style="font-size:1.08rem;color:var(--on-dark)">Bekreft og juster omfang etter behov.</p></div></div>
+        <div class="step reveal"><div class="num num-gold">2</div><div class="tx"><p style="font-size:1.08rem;color:var(--on-dark)">Teknisk oppsett: 1 time fysisk eller digital, som utg.punkt for å konfigurere Horizon DD for dere.</p></div></div>
+        <div class="step reveal"><div class="num num-gold">3</div><div class="tx"><p style="font-size:1.08rem;color:var(--on-dark)">Evaluer og avklar videre løp. Vi signerer en kort avtale med NDA før oppstart.</p></div></div>
+        <div class="step reveal"><div class="num num-gold">4</div><div class="tx"><p style="font-size:1.08rem;color:var(--on-dark)">Første analyse: dere velger en transaksjon, vi kjører den sammen og evaluerer.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="deck-foot">
+    <div class="container">
+      <span><span class="mark"></span>Horizon AI Due Diligence &nbsp;·&nbsp; <a href="mailto:henrik@horizondd.no">henrik@horizondd.no</a></span>
+      <span>Konfidensielt · Juni 2026</span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ===================  DECK 2: PORTEFØLJE  ==================== -->
+<!-- ============================================================= -->
+<div class="deck" id="deck-port">
+<main>
+
+  <!-- Hero -->
+  <section class="hero hero-port slide" id="p-hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">Portefølje &nbsp;·&nbsp; Mai 2026</span>
+      <h1>Henrik Hays</h1>
+      <div class="role">PhD-stipendiat (NTNU) &nbsp;·&nbsp; AI- og automasjonsrådgiver</div>
+      <p class="blurb">Utvalgte oppdrag og forskning, for Arntzen Grette.</p>
+      <div class="divider-dot"><span class="ln"></span><span class="dot"></span></div>
+      <p class="tags">AI-drevet analyse &nbsp;·&nbsp; automatisering &nbsp;·&nbsp; due diligence</p>
+      <p class="am">Horizon AM &nbsp;·&nbsp; <a href="mailto:henrik@horizondd.no">henrik@horizondd.no</a></p>
+    </div>
+  </section>
+
+  <!-- Profil -->
+  <section class="slide light" id="p-profil">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Profil</span>
+        <h2 class="title" style="margin-top:12px">AI-drevne analyse- og automasjonssystemer</h2>
+        <p class="lead" style="font-weight:500">Henrik bygger AI-drevne analyse- og automasjonssystemer for selskap, og forsker på det samme ved NTNU. På tvers av oppdragene i denne porteføljen har han hatt rollen som konsulent og rådgiver for selskap, fra systemarkitektur til levering.</p>
+      </div>
+      <div class="grid g3">
+        <div class="pcard reveal"><span class="ic ic-navy ic-64"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cap"/></svg></span><h3>Forsker (NTNU)</h3><p>AI-drevet analyse av komplekse datagrunnlag og dokumenter, med metodisk grundighet.</p></div>
+        <div class="pcard reveal"><span class="ic ic-navy ic-64"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cpu"/></svg></span><h3>Forretning og utvikling</h3><p>Analyse- og automasjonssystemer, levert for selskap på tvers av bransjer.</p></div>
+        <div class="pcard reveal"><span class="ic ic-navy ic-64"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span><h3>Konsulent</h3><p>Rådgiver for selskap innen automatisering og AI-strategi, fra research til ferdig system.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forskning · NTNU -->
+  <section class="slide dark" id="p-forskning">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Forskning · NTNU</span>
+        <h2 class="title" style="margin-top:12px">AI-drevet analyse og automatisering</h2>
+      </div>
+      <div class="grid" style="grid-template-columns:1.5fr 1fr;gap:48px">
+        <div>
+          <div class="feat reveal">
+            <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cap"/></svg></span>
+            <div class="tx"><h3>PhD-stipendiat ved NTNU</h3><p>Forsker på eiendom-, boligpolitikk og sosial bærekraft, med automatisering og AI-drevet analyse som den metodiske kjernen.</p></div>
+          </div>
+          <div class="feat reveal">
+            <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></span>
+            <div class="tx"><h3>Automatisert dokumentanalyse</h3><p>Utviklet AI-arbeidsflyter for analyse av offentlige dokumenter: automatisert gjennomgang av komplekse datagrunnlag og strukturerte utdrag for planlegging og politiske beslutninger.</p></div>
+          </div>
+          <div class="feat reveal" style="margin-bottom:0">
+            <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-checkc"/></svg></span>
+            <div class="tx"><h3>Metode og etterprøving</h3><p>Dokumentanalyse, etnografisk feltarbeid, kvalitativ koding og kvantitativ analyse – disiplinen som gjør AI-analyse sporbar og tillitsverdig.</p></div>
+          </div>
+        </div>
+        <div class="rel-card reveal">
+          <div class="label">Relevans for Arntzen Grette</div>
+          <p>Due diligence handler om å gjøre store, komplekse og regulerte dokumentmengder analyserbare, med sporbarhet, juridisk forsvarlighet og faglig kontroll.</p>
+          <p class="em">Samme metodiske bakgrunn, rettet mot due diligence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Utvalgte oppdrag I -->
+  <section class="slide light" id="p-oppdrag1">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Utvalgte oppdrag · I</span>
+        <h2 class="title" style="margin-top:12px">AI-drevne analyse- og automasjonssystemer</h2>
+      </div>
+      <div class="reveal erow feature">
+        <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mobile"/></svg></span>
+        <div><h3>Centriq</h3><div class="label">AI-rådgiver · Strategi og arkitektur</div><p>Rådgiver om AI-strategi: enhetsbaserte modeller, OCR og modulær arkitektur.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>AI-strategi, veikart og modellvalg.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg></span>
+        <div><h3>Ontario Wholesale Energy (OWE)</h3><div class="label">Referanseprosjekt · AI-stemmeagent</div><p>AI-stemmeagent som ringer bedrifter og kvalifiserer beslutningstakere.</p></div>
+        <div class="rel"><div class="label">Mulighet for AG</div><p>Stemmeagenter kan settes opp for Horizon og AGs egne bruksområder.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mic"/></svg></span>
+        <div><h3>Taledrift</h3><div class="label">Medgründer · Støttet av Innovasjon Norge</div><p>Talebasert AI: feltarbeidere fyller ut sjekklister, avvik og FDV ved tale.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Tale til strukturert dokumentasjon, også i regulerte arbeidsflyter.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-brain"/></svg></span>
+        <div><h3>Whitson AS</h3><div class="label">Konsulent · Outbound- og AI-optimalisering</div><p>Bygget kontaktdatabase på 9 000+ aktører med persona-baserte sekvenser.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>AI-analyse av fagtungt, teknisk materiale.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gears"/></svg></span>
+        <div><h3>New Initiatives Marketing</h3><div class="label">Konsulent · AI-automasjonsarkitekt</div><p>End-to-end automasjon: transkripsjon, utkast og ferdigstilling i én pipeline.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Automatiserte dokument- og analysepipelines.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Utvalgte oppdrag II -->
+  <section class="slide alt" id="p-oppdrag2">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Utvalgte oppdrag · II</span>
+        <h2 class="title" style="margin-top:12px">Eiendom og due diligence</h2>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span>
+        <div><h3>Horizon Analysis / Horizon DD</h3><div class="label">Medgründer · Rådgiver</div><p>DD-plattform for næringseiendom; produkt- og tjenestearkitektur rettet mot norske CRE-profesjonelle.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Kjernen i Arntzen Grette-tilbudet: DD for næringseiendom.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></span>
+        <div><h3>Tredje Boligsektor AS (Finn Salvesen)</h3><div class="label">AI- og strategirådgiver</div><p>AI-arbeidsflyter for analyse av kommunale boligplaner, samt investorunderlag og AI-støttet finansiell modellering for eiendomsprosjekter.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>AI-dokumentanalyse og modellering.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-hand"/></svg></span>
+        <div><h3>Privat DD-rådgivning</h3><div class="label">Rådgiver for investorer og utviklere</div><p>Feasibilitet, verdivurdering, regulering og motpart for både næringseiendom og boligutvikling, inkludert boligfelt og datasenter-tomteutvikling.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>DD-metodikk i praksis.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Utvalgte oppdrag III -->
+  <section class="slide light" id="p-oppdrag3">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Utvalgte oppdrag · III</span>
+        <h2 class="title" style="margin-top:12px">Regulerte og profesjonelle bransjer</h2>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scale"/></svg></span>
+        <div><h3>Nettbureau</h3><div class="label">Konsulent · Kampanje- og datainfrastruktur</div><p>Leveranser på tvers av fem norske bransjer, inkludert advokater og eiendomsmeglere, med white-label infrastruktur og integrasjoner.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Erfaring med juridisk og eiendoms-vertikal.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-leaf"/></svg></span>
+        <div><h3>Aqaba</h3><div class="label">Konsulent · Fornybar energi</div><p>Kampanje- og dataarbeid for fornybaraktør: 69 000+ leads samlet, A/B-testing og løpende CRM-drift.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Datadrevet arbeid i en regulert energisektor.</p></div>
+      </div>
+      <div class="reveal erow">
+        <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-wind"/></svg></span>
+        <div><h3>Renewcast</h3><div class="label">Konsulent · Vindenergi (SaaS)</div><p>ROI-modellering og sekvensbasert analyse for et SaaS-selskap innen vindenergi.</p></div>
+        <div class="rel"><div class="label">AG-relevans</div><p>Analyse og modellering for fornybar-vertikalen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bredde -->
+  <section class="slide alt" id="p-bredde">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Bredde</span>
+        <h2 class="title" style="margin-top:12px">Konsulent for selskap på tvers av oppdrag</h2>
+        <p class="lead">Som konsulent og rådgiver har Henrik levert AI-, analyse- og automasjonsoppdrag for selskap i en rekke bransjer – 20+ kundekontrakter, 10+ vertikaler.</p>
+      </div>
+      <div class="breadth-feature reveal">
+        <div class="lead-row">
+          <span class="ic ic-gold ic-64"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-finger"/></svg></span>
+          <div><h3>DataDelia</h3><div class="label">Egen AI-konsulentvirksomhet · HIRO</div><p>AI-drevet B2B-research og hyper-personalisert outreach i skala, med menneskelig kvalitetssikring, bl.a. proptech-kampanjer mot ledelsesnivå.</p></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">500+</div><div class="l">Salgsmuligheter<br>over 9 måneder</div></div>
+          <div class="stat"><div class="n">8–25%</div><div class="l">svarrater</div></div>
+          <div class="stat"><div class="n">80–91%</div><div class="l">åpningsrater</div></div>
+        </div>
+      </div>
+      <div class="mini-grid">
+        <div class="mini reveal"><h4>Iulia (helse)</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Helse – datakvalitet og berikning</span></div></div>
+        <div class="mini reveal"><h4>ThinkProfits</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>B2B – kampanjeinfrastruktur</span></div></div>
+        <div class="mini reveal"><h4>TwoCans</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Fler-vertikal outreach</span></div></div>
+        <div class="mini reveal"><h4>Launch Marketing</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Produksjon – AI-testing og benchmarking</span></div></div>
+        <div class="mini reveal"><h4>Queenslab</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Edtech (Lisboa) – klientanskaffelse</span></div></div>
+        <div class="mini reveal"><h4>Lunar Space</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Web3 – whitepaper-analyse</span></div></div>
+        <div class="mini reveal"><h4>Mujo Learning Systems</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Edtech – AI-kapabiliteter</span></div></div>
+        <div class="mini reveal"><h4>Symphonic Digital</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>AI/chatbot-strategi</span></div></div>
+        <div class="mini reveal"><h4>Pius Campaigns</h4><div class="label">Konsulent &nbsp;·&nbsp; <span>Telekom – databerikning</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Behovet -->
+  <section class="slide light" id="p-behov">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Behovet</span>
+        <h2 class="title" style="margin-top:12px">Slik treffer dette Arntzen Grette</h2>
+        <p class="lead">Dokumenterte oppdrag og forskning, koblet til de fire områdene i tilbudet.</p>
+      </div>
+      <div class="grid g2">
+        <div class="need reveal"><span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span><div><h3>DD for næringseiendom</h3><p>Horizon DD, privat DD-rådgivning og AI-drevet dokumentanalyse, bygget for nettopp denne typen arbeid.</p></div></div>
+        <div class="need reveal"><span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-users"/></svg></span><div><h3>Roller og bemanning</h3><p>Erfaring med å lede utviklingsteam og bygge systemer som løfter roller fra junior og oppover.</p></div></div>
+        <div class="need reveal"><span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gears"/></svg></span><div><h3>Drift, administrasjon og ledelse</h3><p>End-to-end automasjons- og analysesystemer som kutter manuelt arbeid og frigjør tid.</p></div></div>
+        <div class="need reveal"><span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-shield"/></svg></span><div><h3>Compliance og risiko</h3><p>Forskningsdisiplin og datakvalitet fra sensitive og regulerte sektorer som helse og juridisk.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Laget for Arntzen Grette -->
+  <section class="slide dark closing" id="p-laget">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Laget for Arntzen Grette</span>
+        <h2 class="title" style="margin-top:12px">Forskning, oppdrag og praksis, samlet</h2>
+      </div>
+      <p class="blurb reveal">AI-drevet analyse og automatisering fra forskningsfronten, levert som konsulent for selskap på tvers av bransjer – nå rettet mot due diligence i næringseiendom for Arntzen Grette.</p>
+      <div class="divider-dot reveal"><span class="ln"></span><span class="dot"></span></div>
+      <p class="small reveal">Oppdraget leveres av Henrik, med Fartein og Bendik (Horizon).</p>
+      <p class="sig reveal">Henrik Hays &nbsp;·&nbsp; Horizon AM</p>
+      <p class="mail reveal"><a href="mailto:henrik@horizondd.no">henrik@horizondd.no</a></p>
+    </div>
+  </section>
+
+  <!-- Referanser -->
+  <section class="slide light" id="p-referanser">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Referanser</span>
+        <h2 class="title" style="margin-top:12px">Referanser og kontaktpersoner</h2>
+      </div>
+      <div class="refs">
+        <div class="ref reveal"><div class="who"><h4>Finn Salvesen</h4><div class="org">Daglig leder · Tredje Boligsektor AS</div><div class="ct">finn@perlen.no · +47 928 00 556</div></div><div class="note">Analysesystem og rådgivning for tomtesøk og prosjektutvikling: vurderer aktuelle tomter og eiendommer, og analyserer forutsetningene for utvikling. Pågående samarbeid.</div></div>
+        <div class="ref reveal"><div class="who"><h4>Mathias Carlsen</h4><div class="org">CEO · whitson</div><div class="ct">carlsen@whitson.com · +47 4045 3458</div></div><div class="note q">«Prosessen har vært smidig, konstruktiv og svært verdifull for oss, og det er betryggende å jobbe med noen som tydelig kan feltet.»</div></div>
+        <div class="ref reveal"><div class="who"><h4>Tim Mulcahy</h4><div class="org">CEO · Ontario Wholesale Energy</div><div class="ct">tim.mulcahy@owenergy.com · +1 416 307 2461</div></div><div class="note">Prosjektleder for AI-drevet utgående ringesystem. Tilbød Henrik en executive-rolle som Head of AI Strategy for franchisen i 2025 (takket nei).</div></div>
+        <div class="ref reveal"><div class="who"><h4>Centriq</h4><div class="org">Edwin · Centriq</div><div class="ct">edwin@centriqhome.com</div></div><div class="note">Rådga om AI-strategi, OCR/bildegjenkjenning, modellvalg, infrastruktur m.m. Tilbød Henrik en prosjektlederrolle for deres AI-arbeid (takket nei).</div></div>
+        <div class="ref reveal"><div class="who"><h4>Jennifer Kelly</h4><div class="org">New Initiatives Marketing</div><div class="ct">jennifer@new-initiatives-marketing.net</div></div><div class="note q">«Henrik (les: automatiseringen og AI-arbeidsflytene) sparte oss for et halvt års arbeid.»</div></div>
+        <div class="ref reveal"><div class="who"><h4>Sindre Øverås</h4><div class="org">Business Development Manager · Nettbureau</div><div class="ct">Kontakt via LinkedIn</div></div><div class="note">Kampanje- og datainfrastruktur på tvers av fem norske bransjer. Rådfører Sindre og Nettbureau sporadisk fremdeles.</div></div>
+        <div class="ref reveal"><div class="who"><h4>Ramsey</h4><div class="org">Aqaba Technologies</div><div class="ct">ramsey@aqabatech.com</div></div><div class="note">Lead-generering i fornybar-sektoren (69 000+ leads samlet og data-beriket, og 20+ nye B2B-klienter landet på 3 måneder).</div></div>
+      </div>
+      <p class="refs-foot reveal">Henrik kan kontaktes for flere referanser. &nbsp;<a href="mailto:henrik@horizondd.no">henrik@horizondd.no</a> &nbsp;·&nbsp; +47 922 29 497</p>
+    </div>
+  </section>
+
+  <footer class="deck-foot">
+    <div class="container">
+      <span><span class="mark"></span>Horizon AI Due Diligence &nbsp;·&nbsp; <a href="mailto:henrik@horizondd.no">henrik@horizondd.no</a></span>
+      <span>Laget for Arntzen Grette · Mai 2026</span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<script>
+  // ---- Deck switching ----
+  const toggle = document.getElementById('deckToggle');
+  const dts = document.querySelectorAll('.deck-toggle .dt');
+  const decks = {tilbud:document.getElementById('deck-tilbud'), port:document.getElementById('deck-port')};
+  const subnavs = {tilbud:document.getElementById('subnav-tilbud'), port:document.getElementById('subnav-port')};
+
+  // Keep section anchors aligned under the variable-height header
+  function setTopPad(){
+    const h = document.querySelector('header.nav').offsetHeight;
+    document.documentElement.style.setProperty('--topbar', h + 'px');
+  }
+
+  // ---- Build the side rail from a deck's section list ----
+  const rail = document.getElementById('sectionRail');
+  function buildRail(name){
+    rail.innerHTML = '';
+    subnavs[name].querySelectorAll('a').forEach(a=>{
+      const item = document.createElement('a');
+      item.className = 'rail-item';
+      item.href = a.getAttribute('href');
+      item.innerHTML = '<span class="lbl">'+a.textContent+'</span><span class="dot"></span>';
+      rail.appendChild(item);
+    });
+  }
+
+  function switchDeck(name){
+    toggle.classList.toggle('is-port', name==='port');
+    dts.forEach(t=>{ const on = t.dataset.deck===name; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+    Object.entries(decks).forEach(([k,el])=>el.classList.toggle('show', k===name));
+    buildRail(name);
+    const hero = decks[name].querySelector('.hero');
+    if(hero) hero.scrollIntoView({behavior:'auto', block:'start'});
+    requestAnimationFrame(setTopPad);
+    runReveal();
+  }
+  dts.forEach(t=>t.addEventListener('click',()=>switchDeck(t.dataset.deck)));
+  window.addEventListener('resize', setTopPad);
+  window.addEventListener('load', setTopPad);
+  buildRail('tilbud');
+  setTopPad();
+
+  // ---- Reveal on scroll ----
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  function runReveal(){
+    document.querySelectorAll('.deck.show .reveal:not(.in)').forEach(el=>io.observe(el));
+  }
+  runReveal();
+
+  // ---- Progress bar ----
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll',()=>{
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h>0 ? (window.scrollY/h*100) : 0) + '%';
+  },{passive:true});
+
+  // ---- Active section highlight on the rail ----
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = e.target.id;
+        rail.querySelectorAll('.rail-item').forEach(a=>{
+          a.classList.toggle('active', a.getAttribute('href')==='#'+id);
+        });
+      }
+    });
+  },{rootMargin:'-30% 0px -65% 0px'});
+  document.querySelectorAll('section.slide').forEach(s=>spy.observe(s));
+
+  // ---- Slide-style navigation (arrow keys + wheel snapping) ----
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const topbar = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--topbar')) || 77;
+  const getSecs = () => [...document.querySelectorAll('.deck.show section.slide')];
+  let navLock = false;
+
+  function currentIndex(){
+    const secs = getSecs(), line = topbar() + 24; let idx = 0;
+    secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top <= line) idx = i; });
+    return idx;
+  }
+  function goTo(i){
+    const secs = getSecs();
+    const t = Math.max(0, Math.min(secs.length-1, i));
+    navLock = true;
+    secs[t].scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
+    setTimeout(()=>{ navLock = false; }, reduceMotion ? 120 : 720);
+  }
+
+  // Keyboard
+  window.addEventListener('keydown',(e)=>{
+    const tag = (e.target.tagName || '').toLowerCase();
+    if(tag==='input' || tag==='textarea' || e.target.isContentEditable) return;
+    const k = e.key;
+    if(k==='ArrowDown' || k==='PageDown' || k==='ArrowRight'){ e.preventDefault(); goTo(currentIndex()+1); }
+    else if(k==='ArrowUp' || k==='PageUp' || k==='ArrowLeft'){ e.preventDefault(); goTo(currentIndex()-1); }
+    else if(k===' '){ if(tag==='button' || tag==='a') return; e.preventDefault(); goTo(currentIndex() + (e.shiftKey ? -1 : 1)); }
+    else if(k==='Home'){ e.preventDefault(); goTo(0); }
+    else if(k==='End'){ e.preventDefault(); goTo(getSecs().length-1); }
+  });
+
+  // Wheel — snap at section boundaries, but allow native scroll inside tall sections
+  window.addEventListener('wheel',(e)=>{
+    if(Math.abs(e.deltaY) < 6) return;
+    if(navLock){ e.preventDefault(); return; }
+    const secs = getSecs(), idx = currentIndex(), cur = secs[idx];
+    if(!cur) return;
+    const line = topbar(), viewH = window.innerHeight, rect = cur.getBoundingClientRect();
+    if(e.deltaY > 0){            // scrolling down
+      if(rect.bottom > viewH + 8) return;   // more of this section below → native scroll
+      e.preventDefault(); goTo(idx+1);
+    } else {                     // scrolling up
+      if(rect.top < line - 8) return;       // more of this section above → native scroll
+      e.preventDefault(); goTo(idx-1);
+    }
+  },{passive:false});
+</script>
+</body>
+</html>
