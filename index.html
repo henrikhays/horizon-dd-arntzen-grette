@@ -37,7 +37,7 @@
     background:var(--light);
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x:clip;
   }
   h1,h2,h3,h4,.serif{font-family:'PT Serif',Georgia,serif}
   .eyebrow{
@@ -182,6 +182,7 @@
   .g2{grid-template-columns:1fr 1fr}
   .g3{grid-template-columns:repeat(3,1fr)}
   .g4{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1.4fr 1fr;gap:48px}
 
   .card{
     background:var(--card-light);border:1px solid var(--border-light);
@@ -337,16 +338,52 @@
   }
   @media(max-width:680px){
     .container,.nav-inner,.subnav-inner{padding-left:20px;padding-right:20px}
-    .g2,.g4,.g3,.checks,.mini-grid{grid-template-columns:1fr}
-    h2.title{font-size:1.8rem}
+    .g2,.g4,.g3,.checks,.mini-grid,.split{grid-template-columns:1fr}
+    .split{gap:30px}
+    h2.title{font-size:1.7rem;line-height:1.18}
+    .title-mark{width:14px;height:14px;margin-right:11px;transform:translateY(-2px)}
+    .lead{font-size:1.05rem}
+    .sub-italic{font-size:1.1rem}
     .nav-contact{display:none}
     .ref{grid-template-columns:1fr}
-    section.slide{padding:60px 0}
-    .price-card .amount{font-size:2.6rem}
+    .price-card .amount{font-size:2.5rem}
+    .price-card,.hl-card,.need,.rel-card{padding:26px}
     .nav-inner{flex-wrap:wrap;gap:12px;justify-content:center}
     .brand{flex:0 1 auto}
     .deck-toggle{order:2;width:100%}
     .subnav-inner{margin:0;width:max-content}
+
+    /* natural-height, top-aligned sections on phones (no forced full-screen) */
+    section.slide{padding:54px 0;scroll-margin-top:calc(var(--topbar,104px) + 10px)}
+    section.slide:not(.hero){min-height:0;display:block}
+
+    /* hero scaling */
+    .hero h1{font-size:2.15rem}
+    .hero .cross-line{font-size:1.12rem}
+    .hero-port h1{font-size:2.4rem}
+    .hero-port .role{font-size:1.15rem}
+    .hero-port .blurb{font-size:1rem}
+    .eyebrow{font-size:.66rem}
+
+    /* feature rows & cards */
+    .feat{gap:16px;margin-bottom:22px}
+    .feat .ic.ic-56{width:48px;height:48px}
+    .steps .num{width:54px;height:54px;font-size:1.25rem}
+    .step{gap:18px}
+
+    /* portfolio engagement rows */
+    .erow{padding:18px 20px;gap:16px}
+    .erow .ic.ic-56{width:48px;height:48px}
+    .erow h3{font-size:1.1rem}
+
+    /* breadth */
+    .breadth-feature{padding:24px}
+    .breadth-feature .lead-row{flex-direction:column;gap:16px}
+    .stats{flex-wrap:wrap;gap:18px 30px}
+
+    /* references */
+    .ref{padding:16px 20px}
+    .quote{font-size:1.08rem}
   }
 </style>
 </head>
@@ -421,7 +458,7 @@
       <a href="#p-oppdrag3">Oppdrag III</a>
       <a href="#p-bredde">Bredde</a>
       <a href="#p-behov">Behovet</a>
-      <a href="#p-laget">Laget for AG</a>
+      <a href="#p-laget">Laget for Arntzen Grette</a>
       <a href="#p-referanser">Referanser</a>
     </div>
   </nav>
@@ -437,7 +474,7 @@
   <section class="hero hero-tilbud slide" id="t-hero">
     <div class="deco"></div>
     <div class="container hero-inner">
-      <span class="eyebrow">Konsultasjonspakke &nbsp;·&nbsp; Eksklusivt for AG</span>
+      <span class="eyebrow">Konsultasjonspakke &nbsp;·&nbsp; Eksklusivt for Arntzen Grette</span>
       <h1>AI-drevet due diligence<br>og rådgivning</h1>
       <p class="cross-line">Horizon DD &nbsp;<span class="x">×</span>&nbsp; Arntzen Grette</p>
     </div>
@@ -448,7 +485,7 @@
   <section class="slide light" id="t-utgangspunkt">
     <div class="container">
       <div class="sec-head reveal"><h2 class="title"><span class="title-mark"></span>Utgangspunktet</h2></div>
-      <div class="grid" style="grid-template-columns:1.4fr 1fr;gap:48px;align-items:center">
+      <div class="grid split" style="align-items:center">
         <div>
           <div class="feat reveal">
             <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span>
@@ -582,9 +619,9 @@
         <p class="sub-italic">Eiendomsinnsikt møter praktisk AI-bygging.</p>
       </div>
       <div class="grid g3">
-        <div class="card team-card reveal"><h3>Henrik Hays</h3><div class="role">Leder · PhD (NTNU), AI-rådgiver</div><p>Mer enn tre år med LLM-systemer, AI-agenter og datapipelines i forretningssammenheng skala. Se egen portefølje (Appendix).</p></div>
-        <div class="card team-card reveal"><h3>Bendik Skaslien</h3><div class="role">Eiendom og kapital · cand.jur.</div><p>Mer enn 24 år i næringseiendom: OBOS, DNB Næringseiendom, Asset Buyout Partners, Newsec og Amstrat.</p></div>
-        <div class="card team-card reveal"><h3>Fartein Hansen</h3><div class="role">Produkt og analyse</div><p>Bygger og tester plattformen i praksis, og sikrer at innsikten er konkret, strukturert og etterprøvbar.</p></div>
+        <div class="card team-card reveal"><h3>Henrik Hays</h3><div class="role">Prosjektleder · PhD (NTNU), AI-rådgiver</div><p>Mer enn tre år med LLM-systemer, AI-agenter og datapipelines i forretningssammenheng skala. Se egen portefølje (Appendix).</p></div>
+        <div class="card team-card reveal"><h3>Bendik Skaslien</h3><div class="role">Leder og fagekspert · Eiendom og kapital, cand.jur.</div><p>Mer enn 24 år i næringseiendom: OBOS, DNB Næringseiendom, Asset Buyout Partners, Newsec og Amstrat.</p></div>
+        <div class="card team-card reveal"><h3>Fartein Hansen</h3><div class="role">Produkt og analyse · Bachelor fra Handelshøyskolen</div><p>Bygger og tester plattformen i praksis, og sikrer at innsikten er konkret, strukturert og etterprøvbar.</p></div>
       </div>
       <p class="quote reveal">«Prosessen har vært smidig, konstruktiv og svært verdifull for oss.» &nbsp;<span>Mathias Carlsen, CEO, Whitson</span></p>
     </div>
@@ -600,7 +637,7 @@
           <div class="per">per måned</div>
           <div class="hr"></div>
           <div class="total">Samlet NOK 225 000 over tre måneder.</div>
-          <div class="note">Fakturert månedlig. Eksklusivt for AG i perioden.</div>
+          <div class="note">Fakturert månedlig. Eksklusivt for Arntzen Grette i perioden.</div>
         </div>
         <div class="checks" style="grid-template-columns:1fr;gap:20px">
           <div class="check reveal"><span class="ic ic-gold-deep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg></span><p>Rådgivning ledet av Henrik, støtte fra Fartein og Bendik</p></div>
@@ -678,7 +715,7 @@
         <span class="eyebrow">Forskning · NTNU</span>
         <h2 class="title" style="margin-top:12px">AI-drevet analyse og automatisering</h2>
       </div>
-      <div class="grid" style="grid-template-columns:1.5fr 1fr;gap:48px">
+      <div class="grid split">
         <div>
           <div class="feat reveal">
             <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cap"/></svg></span>
@@ -712,27 +749,27 @@
       <div class="reveal erow feature">
         <span class="ic ic-gold ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mobile"/></svg></span>
         <div><h3>Centriq</h3><div class="label">AI-rådgiver · Strategi og arkitektur</div><p>Rådgiver om AI-strategi: enhetsbaserte modeller, OCR og modulær arkitektur.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>AI-strategi, veikart og modellvalg.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>AI-strategi, veikart og modellvalg.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg></span>
         <div><h3>Ontario Wholesale Energy (OWE)</h3><div class="label">Referanseprosjekt · AI-stemmeagent</div><p>AI-stemmeagent som ringer bedrifter og kvalifiserer beslutningstakere.</p></div>
-        <div class="rel"><div class="label">Mulighet for AG</div><p>Stemmeagenter kan settes opp for Horizon og AGs egne bruksområder.</p></div>
+        <div class="rel"><div class="label">Mulighet for Arntzen Grette</div><p>Stemmeagenter kan settes opp for Horizon og Arntzen Grettes egne bruksområder.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mic"/></svg></span>
         <div><h3>Taledrift</h3><div class="label">Medgründer · Støttet av Innovasjon Norge</div><p>Talebasert AI: feltarbeidere fyller ut sjekklister, avvik og FDV ved tale.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Tale til strukturert dokumentasjon, også i regulerte arbeidsflyter.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Tale til strukturert dokumentasjon, også i regulerte arbeidsflyter.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-brain"/></svg></span>
         <div><h3>Whitson AS</h3><div class="label">Konsulent · Outbound- og AI-optimalisering</div><p>Bygget kontaktdatabase på 9 000+ aktører med persona-baserte sekvenser.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>AI-analyse av fagtungt, teknisk materiale.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>AI-analyse av fagtungt, teknisk materiale.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gears"/></svg></span>
         <div><h3>New Initiatives Marketing</h3><div class="label">Konsulent · AI-automasjonsarkitekt</div><p>End-to-end automasjon: transkripsjon, utkast og ferdigstilling i én pipeline.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Automatiserte dokument- og analysepipelines.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Automatiserte dokument- og analysepipelines.</p></div>
       </div>
     </div>
   </section>
@@ -747,17 +784,17 @@
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-search"/></svg></span>
         <div><h3>Horizon Analysis / Horizon DD</h3><div class="label">Medgründer · Rådgiver</div><p>DD-plattform for næringseiendom; produkt- og tjenestearkitektur rettet mot norske CRE-profesjonelle.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Kjernen i Arntzen Grette-tilbudet: DD for næringseiendom.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Kjernen i Arntzen Grette-tilbudet: DD for næringseiendom.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></span>
         <div><h3>Tredje Boligsektor AS (Finn Salvesen)</h3><div class="label">AI- og strategirådgiver</div><p>AI-arbeidsflyter for analyse av kommunale boligplaner, samt investorunderlag og AI-støttet finansiell modellering for eiendomsprosjekter.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>AI-dokumentanalyse og modellering.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>AI-dokumentanalyse og modellering.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-hand"/></svg></span>
         <div><h3>Privat DD-rådgivning</h3><div class="label">Rådgiver for investorer og utviklere</div><p>Feasibilitet, verdivurdering, regulering og motpart for både næringseiendom og boligutvikling, inkludert boligfelt og datasenter-tomteutvikling.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>DD-metodikk i praksis.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>DD-metodikk i praksis.</p></div>
       </div>
     </div>
   </section>
@@ -772,17 +809,17 @@
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scale"/></svg></span>
         <div><h3>Nettbureau</h3><div class="label">Konsulent · Kampanje- og datainfrastruktur</div><p>Leveranser på tvers av fem norske bransjer, inkludert advokater og eiendomsmeglere, med white-label infrastruktur og integrasjoner.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Erfaring med juridisk og eiendoms-vertikal.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Erfaring med juridisk og eiendoms-vertikal.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-leaf"/></svg></span>
         <div><h3>Aqaba</h3><div class="label">Konsulent · Fornybar energi</div><p>Kampanje- og dataarbeid for fornybaraktør: 69 000+ leads samlet, A/B-testing og løpende CRM-drift.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Datadrevet arbeid i en regulert energisektor.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Datadrevet arbeid i en regulert energisektor.</p></div>
       </div>
       <div class="reveal erow">
         <span class="ic ic-navy ic-56"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-wind"/></svg></span>
         <div><h3>Renewcast</h3><div class="label">Konsulent · Vindenergi (SaaS)</div><p>ROI-modellering og sekvensbasert analyse for et SaaS-selskap innen vindenergi.</p></div>
-        <div class="rel"><div class="label">AG-relevans</div><p>Analyse og modellering for fornybar-vertikalen.</p></div>
+        <div class="rel"><div class="label">Arntzen Grette-relevans</div><p>Analyse og modellering for fornybar-vertikalen.</p></div>
       </div>
     </div>
   </section>
